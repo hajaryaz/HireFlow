@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Intelligent</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    hr {
+      border: none;
+      height: 2px;
+      background: linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045);
+      margin: 20px 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .card h2 {
+      color: #833ab4;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    button {
+      background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    label {
+      font-weight: 500;
+      color: #333;
+      margin-right: 10px;
+    }
+
+    input, select {
+      padding: 10px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      margin-right: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #833ab4;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th {
+      background: linear-gradient(135deg, #833ab4 0%, #c13584 100%);
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    tr:hover {
+      background-color: #fafafa;
+    }
+
+    a {
+      color: #833ab4;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .stats-card {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 15px;
+      border-left: 4px solid #fd1d1d;
+    }
+
+    .stats-card h3 {
+      color: #833ab4;
+      margin-bottom: 15px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #833ab4;
+      font-weight: 500;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .badge-france {
+      background: #0053a0;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-linkedin {
+      background: #0077b5;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-success {
+      background: #28a745;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-failed {
+      background: #dc3545;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 10px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .card {
+        padding: 15px;
+      }
+      input, select, button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+      }
+      table {
+        font-size: 0.8rem;
+        overflow-x: auto;
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 Job Intelligent</h1>
+    <p class="subtitle">Search jobs scraped from France Travail &amp; LinkedIn — and match your CV.</p>
+  </div>
+  <hr/>
+
+  <!-- ── STATS ── -->
+  <div class="card">
+    <h2>📊 Database Stats</h2>
+    <button onclick="loadStats()">Load Stats</button>
+    <div id="stats-output"></div>
+  </div>
+
+  <!-- ── JOB SEARCH ── -->
+  <div class="card">
+    <h2>🔍 Search Jobs</h2>
+    <label>Title keyword: <input type="text" id="search-title" placeholder="e.g. Data Engineer"/></label>
+    <label>Location: <input type="text" id="search-location" placeholder="e.g. Paris"/></label>
+    <label>Source:
+      <select id="search-source">
+        <option value="">All</option>
+        <option value="france_travail">France Travail</option>
+        <option value="linkedin">LinkedIn</option>
+      </select>
+    </label>
+    <button onclick="searchJobs()">Search</button>
+    <div id="jobs-output"></div>
+  </div>
+
+  <!-- ── CV MATCH ── -->
+  <div class="card">
+    <h2>📄 Match Your CV</h2>
+    <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin-bottom: 15px;">
+      <strong>💡 Astuce :</strong> Le matching est optimisé pour les CV en <strong>FRANÇAIS</strong> 
+      (les offres d'emploi sont en français). Pour de meilleurs résultats, uploadez un CV en français.
+    </div>
+    <input type="file" id="cv-file" accept=".txt,.pdf"/>
+    <label>Top results: <input type="number" id="top-n" value="10" min="1" max="50" style="width:70px"/></label>
+    <button onclick="matchCV()">Match CV</button>
+    <div id="match-output"></div>
+  </div>
+
+  <!-- ── PIPELINE LOGS (NOUVEAU) ── -->
+  <div class="card">
+    <h2>📋 Pipeline Execution Logs</h2>
+    <button onclick="loadLogs()">Load Logs</button>
+    <div id="logs-output"></div>
+  </div>
+
+  <div class="footer">
+    <small>API: <a href="http://localhost:8083/docs" target="_blank">http://localhost:8083/docs</a></small>
+  </div>
+</div>
+
+<script>
+    const API = "http://localhost:8083";
+
+    // ── STATS ──────────────────────────────────────────────────────────────────
+    async function loadStats() {
+      document.getElementById("stats-output").innerHTML = '<div class="loading">Loading...</div>';
+      try {
+        const res = await fetch(`${API}/stats`);
+        const data = await res.json();
+
+        if (data.error) {
+          document.getElementById("stats-output").innerHTML = `<p>Error: ${data.error}</p>`;
+          return;
+        }
+
+        let html = `<p><strong>Total jobs in Gold layer: ${data.total_jobs}</strong></p>`;
+        html += '<div class="stats-grid">';
+
+        html += '<div class="stats-card"><h3>📌 By Title</h3><table border="1" cellpadding="4"><tr><th>Title</th><th>Count</th></tr>';
+        (data.by_title || []).forEach(r => {
+          html += `<tr><td><strong>${r.title}</strong></td><td>${r.count}</td></tr>`;
+        });
+        html += "</table></div>";
+
+        html += '<div class="stats-card"><h3>📍 By Source</h3><table border="1" cellpadding="4"><tr><th>Source</th><th>Count</th></tr>';
+        (data.by_source || []).forEach(r => {
+          let badge = r.source === "france_travail" ? '<span class="badge-france">France Travail</span>' : 
+                      (r.source === "linkedin" ? '<span class="badge-linkedin">LinkedIn</span>' : r.source);
+          html += `<tr><td>${badge}</td><td><strong>${r.count}</strong></td></tr>`;
+        });
+        html += "</table></div>";
+
+        html += '<div class="stats-card"><h3>📍 Top Locations</h3><table border="1" cellpadding="4"><tr><th>Location</th><th>Count</th></tr>';
+        (data.by_location || []).forEach(r => {
+          html += `<tr><td>${r.location}</td><td><strong>${r.count}</strong></td></tr>`;
+        });
+        html += "</table></div></div>";
+
+        document.getElementById("stats-output").innerHTML = html;
+      } catch (e) {
+        document.getElementById("stats-output").innerHTML = `<p>Could not reach API: ${e.message}</p>`;
+      }
+    }
+
+    // ── SEARCH JOBS ────────────────────────────────────────────────────────────
+    async function searchJobs() {
+      const title    = document.getElementById("search-title").value;
+      const location = document.getElementById("search-location").value;
+      const source   = document.getElementById("search-source").value;
+
+      let url = `${API}/jobs?limit=50`;
+      if (title)    url += `&title=${encodeURIComponent(title)}`;
+      if (location) url += `&location=${encodeURIComponent(location)}`;
+      if (source)   url += `&source=${encodeURIComponent(source)}`;
+
+      document.getElementById("jobs-output").innerHTML = '<div class="loading">Searching...</div>';
+      try {
+        const res  = await fetch(url);
+        const data = await res.json();
+
+        if (!data.jobs || data.jobs.length === 0) {
+          document.getElementById("jobs-output").innerHTML = "<p>No jobs found.</p>";
+          return;
+        }
+
+        let html = `<p>Found <strong>${data.total}</strong> jobs:</p>`;
+        html += "<table border='1' cellpadding='4'><thead><tr><th>#</th><th>Title</th><th>Company</th><th>Location</th><th>Source</th><th>Link</th></tr></thead><tbody>";
+
+        data.jobs.forEach((job, i) => {
+          const link = job.job_url ? `<a href="${job.job_url}" target="_blank">View</a>` : "—";
+          let sourceBadge = job.source === "france_travail" ? '<span class="badge-france">France Travail</span>' : 
+                            (job.source === "linkedin" ? '<span class="badge-linkedin">LinkedIn</span>' : job.source || "—");
+          html += `<tr>
+            <td>${i + 1}</td>
+            <td><strong>${job.title_normalized || job.title || "—"}</strong></td>
+            <td>${job.company || "—"}</td>
+            <td>${job.location || "—"}</td>
+            <td>${sourceBadge}</td>
+            <td>${link}</td>
+          </tr>`;
+        });
+
+        html += "</tbody></table>";
+        document.getElementById("jobs-output").innerHTML = html;
+      } catch (e) {
+        document.getElementById("jobs-output").innerHTML = `<p>Error: ${e.message}</p>`;
+      }
+    }
+
+    // ── CV MATCH ───────────────────────────────────────────────────────────────
+    async function matchCV() {
+      const fileInput = document.getElementById("cv-file");
+      const topN      = document.getElementById("top-n").value;
+
+      if (!fileInput.files.length) {
+        alert("Please select a CV file first.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+
+      document.getElementById("match-output").innerHTML = '<div class="loading">Analysing your CV...</div>';
+      try {
+        const res  = await fetch(`${API}/match-cv?top_n=${topN}`, {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json();
+
+        if (data.error) {
+          document.getElementById("match-output").innerHTML = `<p>Error: ${data.error}</p>`;
+          return;
+        }
+
+        let html = `<p>CV: <strong>${data.cv_filename}</strong> — compared against <strong>${data.total_jobs_compared}</strong> jobs.</p>`;
+        html += "<table border='1' cellpadding='4'><thead><tr><th>Rank</th><th>Match %</th><th>Title</th><th>Company</th><th>Location</th><th>Source</th><th>Link</th></tr></thead><tbody>";
+
+        data.top_matches.forEach((job, i) => {
+          const link = job.job_url ? `<a href="${job.job_url}" target="_blank">View</a>` : "—";
+          let sourceBadge = job.source === "france_travail" ? '<span class="badge-france">France Travail</span>' : 
+                            (job.source === "linkedin" ? '<span class="badge-linkedin">LinkedIn</span>' : job.source || "—");
+          html += `<tr>
+            <td><strong>${i + 1}</strong></td>
+            <td><strong>${job.match_score}%</strong></td>
+            <td>${job.title_normalized || job.title || "—"}</td>
+            <td>${job.company || "—"}</td>
+            <td>${job.location || "—"}</td>
+            <td>${sourceBadge}</td>
+            <td>${link}</td>
+          </tr>`;
+        });
+
+        html += "</tbody></table>";
+        document.getElementById("match-output").innerHTML = html;
+      } catch (e) {
+        document.getElementById("match-output").innerHTML = `<p>Error: ${e.message}</p>`;
+      }
+    }
+
+    // ── PIPELINE LOGS (NOUVEAU) ─────────────────────────────────────────────────
+    async function loadLogs() {
+      document.getElementById("logs-output").innerHTML = '<div class="loading">Loading logs...</div>';
+      try {
+        const res = await fetch(`${API}/pipeline-logs?limit=50`);
+        const data = await res.json();
+
+        if (data.error) {
+          document.getElementById("logs-output").innerHTML = `<p>Error: ${data.error}</p>`;
+          return;
+        }
+
+        if (!data.logs || data.logs.length === 0) {
+          document.getElementById("logs-output").innerHTML = "<p>No pipeline logs found yet. Run the DAG first.</p>";
+          return;
+        }
+
+        let html = `<p><strong>📊 Total executions: ${data.total_logs}</strong></p>`;
+        html += "<table border='1' cellpadding='4'>";
+        html += "<thead><tr>";
+        html += "<th>Date</th>";
+        html += "<th>Task</th>";
+        html += "<th>Status</th>";
+        html += "<th>Scraped</th>";
+        html += "<th>Bronze</th>";
+        html += "<th>Silver</th>";
+        html += "<th>Gold</th>";
+        html += "<th>Duration (s)</th>";
+        html += "</tr></thead><tbody>";
+
+        data.logs.forEach(log => {
+          const statusBadge = log.status === "success" ? '<span class="badge-success">✅ Success</span>' : 
+                              (log.status === "failed" ? '<span class="badge-failed">❌ Failed</span>' : log.status);
+          
+          let executedAt = log.executed_at ? new Date(log.executed_at).toLocaleString() : "—";
+          
+          html += `<tr>
+            <td>${executedAt}</td>
+            <td><strong>${log.task_name || "—"}</strong></td>
+            <td>${statusBadge}</td>
+            <td>${log.jobs_scraped || 0}</td>
+            <td>${log.jobs_bronze || 0}</td>
+            <td>${log.jobs_silver || 0}</td>
+            <td>${log.jobs_gold || 0}</td>
+            <td>${log.duration_sec || 0}</td>
+          </tr>`;
+        });
+
+        html += "</tbody></table>";
+        document.getElementById("logs-output").innerHTML = html;
+      } catch (e) {
+        document.getElementById("logs-output").innerHTML = `<p>Could not reach API: ${e.message}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+selenium==4.18.1
+pandas
+beautifulsoup4==4.12.3
+numpy
+requests
+scikit-learn
+pymysql
+sqlalchemy
+fastapi
+uvicorn
+python-multipart
+PyPDF2
