@@ -1,176 +1,144 @@
-<div align="center">
-
 # 🎯 HireFlow
 
-**Plateforme de collecte, de traitement et de matching d'offres d'emploi Tech**
+**Pipeline de données de bout en bout pour les offres d'emploi Tech : collecte automatisée, ETL Medallion, API REST et matching CV ↔ offres.**
 
-[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python\&logoColor=white)](https://www.python.org/)
-[![Airflow](https://img.shields.io/badge/Apache_Airflow-2.9.1-017CEE?logo=apacheairflow\&logoColor=white)](https://airflow.apache.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi\&logoColor=white)](https://fastapi.tiangolo.com/)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql\&logoColor=white)](https://www.mysql.com/)
-[![scikit--learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikit-learn\&logoColor=white)](https://scikit-learn.org/)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker\&logoColor=white)](https://www.docker.com/)
-[![Power BI](https://img.shields.io/badge/Power_BI-F2C811?logo=powerbi\&logoColor=black)](https://www.microsoft.com/power-platform/products/power-bi)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![Airflow](https://img.shields.io/badge/Airflow-2.9-017CEE?logo=apacheairflow&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?logo=powerbi&logoColor=black)
 
-*Projet de Fin d'Études · ENSA Al Hoceïma · Transformation Digitale & IA · 2025–2026*
+> Projet académique · ENSA Al Hoceïma · Transformation Digitale & IA · 2025–2026
 
-<img src="docs/images/web-interface.png" alt="Interface HireFlow" width="80%">
-
-</div>
+![Démo HireFlow](docs/images/demo.gif)
 
 ---
 
 ## 💡 Le projet
 
-**HireFlow** est une plateforme de collecte, traitement et analyse d'offres d'emploi Tech.
-
-Elle automatise la chaîne de données, de la **collecte des offres** à leur transformation avec une architecture **Medallion (Bronze → Silver → Gold)**, puis expose les données via une **API FastAPI** et propose un **matching CV ↔ offres** basé sur TF-IDF et la similarité cosinus.
-
-Les données sont également exploitées dans un **dashboard Power BI**, avec une infrastructure conteneurisée via **Docker Compose**.
-
----
-
-## ✨ Fonctionnalités
-
-* 🔎 **Collecte automatisée** des offres via l'API France Travail et Selenium.
-* 🧹 **Pipeline ETL Medallion** : Bronze → Silver → Gold.
-* ⚙️ **Orchestration avec Apache Airflow**.
-* 📊 **Monitoring** des exécutions et des volumes traités.
-* 🚀 **API REST FastAPI** pour la recherche, les statistiques et le matching.
-* 🧠 **Matching CV ↔ offres** avec TF-IDF + similarité cosinus.
-* 🖥️ **Interface Web** pour explorer les offres et effectuer un matching.
-* 📈 **Dashboard Power BI** pour analyser les données collectées.
-* 🐳 **Déploiement local conteneurisé** avec Docker Compose.
-
----
-
-## 🏗️ Architecture
-
-<p align="center">
-  <img src="docs/images/architecture.png" alt="Architecture HireFlow" width="95%">
-</p>
-
-```mermaid
-flowchart LR
-    FT[France Travail API] --> B[(Bronze)]
-    B --> S[(Silver)]
-    S --> G[(Gold)]
-    LI[LinkedIn / Selenium] --> B
-    AF{{Airflow}} -.-> B
-    AF -.-> S
-    AF -.-> G
-    G --> API[FastAPI]
-    API --> WEB[Interface Web]
-    API --> PBI[Power BI]
-    CV[CV PDF/TXT] --> API
-```
-
-**Bronze** → données brutes
-**Silver** → données nettoyées, normalisées et dédupliquées
-**Gold** → données préparées pour le NLP et la BI
-
----
-
-## 🛠️ Stack technique
-
-| Domaine          | Technologies                      |
-| ---------------- | --------------------------------- |
-| Data Engineering | Python, pandas, NumPy             |
-| Orchestration    | Apache Airflow                    |
-| Backend / API    | FastAPI, Uvicorn                  |
-| Database         | MySQL, SQLAlchemy, PyMySQL        |
-| NLP              | scikit-learn, TF-IDF, PyPDF2      |
-| Collecte         | Requests, Selenium, BeautifulSoup |
-| Frontend         | HTML, CSS, JavaScript             |
-| BI               | Power BI                          |
-| Infrastructure   | Docker, Docker Compose            |
-
----
-
-## 🧠 Matching CV
-
-Le CV est transformé en représentation **TF-IDF**, puis comparé aux descriptions des offres grâce à la **similarité cosinus** afin de retourner les offres présentant les scores les plus élevés.
-
-```text
-CV PDF / TXT
-     ↓
-Extraction du texte
-     ↓
-TF-IDF
-     ↓
-Similarité cosinus
-     ↓
-Top N offres
-```
-
----
+HireFlow collecte chaque jour des offres d'emploi Tech depuis **France Travail** (API REST OAuth2) et **LinkedIn** (Selenium). Les offres passent ensuite par un pipeline ETL en 3 couches (**Bronze → Silver → Gold**) orchestré par **Apache Airflow**. Les données obtenues sont exposées par une **API FastAPI**, exploitées dans un **dashboard Power BI** et utilisées par un moteur de **matching CV ↔ offres** (TF-IDF + similarité cosinus).
 
 ## 📊 Résultats
 
-D'après le rapport et les captures de démonstration :
+| Indicateur | Valeur |
+|---|---|
+| Sources de données | 2 (France Travail, LinkedIn) |
+| Mots-clés de recherche | 28 |
+| Offres collectées par exécution | ~768 |
+| Durée d'une exécution du pipeline | ~85 s |
+| Offres analysées dans le dashboard | 4 375 |
+| Entreprises distinctes | ~1 440 |
 
-| Indicateur                         | Résultat |
-| ---------------------------------- | -------: |
-| Mots-clés de collecte              |       28 |
-| Offres collectées par run          |     ~768 |
-| Durée du pipeline observé          |    ~85 s |
-| Offres affichées dans le dashboard |    4 375 |
-| Entreprises distinctes             |  ~1,44 K |
+## 🏗️ Architecture
 
-<p align="center">
-  <img src="docs/images/powerbi-dashboard.png" alt="Dashboard Power BI" width="48%">
-  <img src="docs/images/powerbi-cv-matching.png" alt="Matching CV Power BI" width="48%">
-</p>
+![Architecture](docs/images/architecture.png)
 
----
+| Couche | Rôle |
+|---|---|
+| **Bronze** | Données brutes, telles que collectées |
+| **Silver** | Dédoublonnage sur `job_url`, normalisation des intitulés, parsing des dates, nettoyage des localisations |
+| **Gold** | Titres catégorisés et texte de description prêt pour le NLP et la BI |
 
-## 🚀 Démarrage rapide
+Chaque tâche écrit dans une table `pipeline_logs` : statut, volumes par couche, durée et erreurs.
 
-### Prérequis
+### Orchestration Airflow
 
-* Docker + Docker Compose
-* Identifiants API France Travail
+DAG `job_scraping_pipeline` exécuté chaque jour (`0 7 * * *`), avec 1 relance automatique en cas d'échec :
+
+```
+extract_and_load_bronze  >>  transform_to_silver  >>  transform_to_gold
+```
+
+![DAG Airflow](docs/images/airflow-dag.png)
+
+### Modèle de données (analytique)
+
+Schéma en étoile : `fact_jobs` + dimensions date, location, title, company, source et contract.
+
+![Modèle de données](docs/images/data-model.png)
+
+## 🧠 Matching CV ↔ offres
+
+```
+CV (PDF/TXT) → extraction du texte → TF-IDF (CV + offres Gold) → similarité cosinus → Top N offres
+```
+
+![Matching CV](docs/images/matching.png)
+
+## 🚀 API FastAPI
+
+| Endpoint | Description |
+|---|---|
+| `GET /jobs` | Recherche d'offres (filtres titre, localisation, source) |
+| `GET /stats` | Statistiques du marché |
+| `GET /pipeline-logs` | Historique des exécutions du pipeline |
+| `POST /match-cv` | Upload d'un CV → offres les plus pertinentes |
+
+Documentation Swagger : `http://localhost:8083/docs`
+
+## 📈 Dashboards Power BI
+
+![Dashboard marché](docs/images/dashboard-market.png)
+![Dashboard matching](docs/images/dashboard-matching.png)
+
+## 🛠️ Stack technique
+
+| Domaine | Technologies |
+|---|---|
+| Collecte | Requests (API OAuth2), Selenium, BeautifulSoup |
+| Data Engineering | Python, pandas, SQLAlchemy |
+| Orchestration | Apache Airflow 2.9 |
+| Base de données | MySQL 8.0 |
+| Backend | FastAPI, Uvicorn |
+| NLP | scikit-learn (TF-IDF, cosinus), PyPDF2 |
+| Frontend | HTML, CSS, JavaScript |
+| BI | Power BI |
+| Infra | Docker, Docker Compose |
+
+## ⚙️ Lancer le projet
+
+**Prérequis :** Docker, Docker Compose et des identifiants [API France Travail](https://francetravail.io).
 
 ```bash
-git clone https://github.com/<votre-compte>/HireFlow.git
+git clone https://github.com/hajaryaz/HireFlow.git
 cd HireFlow
+cp .env.example .env        # puis remplir les clés
 docker compose up -d --build
-```
-
-Créer un fichier `.env` :
-
-```env
-FERNET_KEY=...
-SECRET_KEY=...
-FT_CLIENT_ID=...
-FT_CLIENT_SECRET=...
-```
-
-Déclencher le pipeline :
-
-```bash
 docker compose exec airflow-scheduler airflow dags trigger job_scraping_pipeline
 ```
 
-| Service       | Accès                        |
-| ------------- | ---------------------------- |
-| Airflow       | `http://localhost:8085`      |
-| API + Swagger | `http://localhost:8083/docs` |
-| Interface Web | `frontend/index.html`        |
+| Service | URL |
+|---|---|
+| Airflow | http://localhost:8085 (admin / admin) |
+| API + Swagger | http://localhost:8083/docs |
+| Interface Web | ouvrir `frontend/index.html` |
 
----
+## 📁 Structure
+
+```
+HireFlow/
+├── api/            # API FastAPI + matching CV
+├── dags/           # DAG Airflow
+├── scrapers/       # Scrapers + pipeline ETL
+├── sql/            # Schéma MySQL (Bronze/Silver/Gold/logs)
+├── frontend/       # Interface web
+├── docs/images/    # Captures du README
+└── docker-compose.yml
+```
 
 ## 🔭 Perspectives
 
-* Enrichissement avec de nouvelles sources d'emploi.
-* Évolution vers un matching sémantique.
-* Gestion des profils CV et authentification.
-* Déploiement sur une infrastructure distante.
+- Matching sémantique (embeddings) en remplacement de TF-IDF
+- Tests de qualité des données automatisés
+- Nouvelles sources d'offres
+- Déploiement cloud
 
----
+## ⚠️ Avertissement
+
+Projet réalisé à des fins pédagogiques. Le scraping de LinkedIn est soumis à ses conditions d'utilisation.
 
 ## 👩‍💻 Équipe
 
-**Hajar ELYAZRI · Maroua ALAMI HARRAK**
-
-**ENSA Al Hoceïma · Transformation Digitale & Intelligence Artificielle · 2025–2026**
+**Hajar ELYAZRI** · **Maroua ALAMI HARRAK**
