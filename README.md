@@ -41,6 +41,8 @@ HireFlow collecte chaque jour des offres d'emploi Tech depuis **France Travail**
 
 ## 🏗️ Architecture
 
+![Architecture](docs/images/architecture.png)
+
 | Couche | Rôle |
 |---|---|
 | **Bronze** | Données brutes, telles que collectées |
@@ -77,6 +79,16 @@ CV (PDF/TXT) → extraction du texte → TF-IDF (CV + offres Gold) → similarit
 | `POST /match-cv` | Upload d'un CV → offres les plus pertinentes |
 
 Documentation Swagger : `http://localhost:8083/docs`
+
+## 📈 Dashboards Power BI
+
+**Pilotage du marché** : KPIs (4 375 offres, ~1 440 entreprises), répartition par source, localisation, intitulé et type de contrat, salaire moyen par source et carte des offres.
+
+![Dashboard marché](docs/images/dashboard-market.png)
+
+**Matching CV** : score de correspondance par type de contrat, entreprise, source et localisation.
+
+![Dashboard matching](docs/images/dashboard-matching.png)
 
 ## 🛠️ Stack technique
 
