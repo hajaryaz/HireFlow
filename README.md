@@ -14,7 +14,7 @@
 
 ![Démo HireFlow](docs/images/demo.gif)
 
-▶️ [Voir la vidéo de démo complète (MP4, 1 min 10)](docs/demo/hireflow-demo.mp4) · 📑 [Présentation du projet (PDF)](docs/presentation/HireFlow-presentation.pdf)
+▶️ [Voir la vidéo de démo complète (MP4, 1 min 10)](docs/demo/hireflow-demo.mp4) · 📑 [Présentation du projet (PDF)](docs/Presentation-hireflow.pdf)
 
 ---
 
