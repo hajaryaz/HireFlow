@@ -14,6 +14,8 @@
 
 ![Démo HireFlow](docs/images/demo.gif)
 
+▶️ [Voir la vidéo de démo complète (MP4, 1 min 10)](docs/demo/hireflow-demo.mp4)
+
 ---
 
 ## 💡 Le projet
@@ -31,9 +33,13 @@ HireFlow collecte chaque jour des offres d'emploi Tech depuis **France Travail**
 | Offres analysées dans le dashboard | 4 375 |
 | Entreprises distinctes | ~1 440 |
 
-## 🏗️ Architecture
+## 🖥️ Aperçu de l'application
 
-![Architecture](docs/images/architecture.png)
+| Accueil | Recherche d'offres | Matching CV |
+|---|---|---|
+| ![Accueil](docs/images/app-home.png) | ![Recherche](docs/images/app-search.png) | ![Matching CV](docs/images/app-matching.png) |
+
+## 🏗️ Architecture
 
 | Couche | Rôle |
 |---|---|
@@ -51,21 +57,15 @@ DAG `job_scraping_pipeline` exécuté chaque jour (`0 7 * * *`), avec 1 relance 
 extract_and_load_bronze  >>  transform_to_silver  >>  transform_to_gold
 ```
 
-![DAG Airflow](docs/images/airflow-dag.png)
-
 ### Modèle de données (analytique)
 
 Schéma en étoile : `fact_jobs` + dimensions date, location, title, company, source et contract.
-
-![Modèle de données](docs/images/data-model.png)
 
 ## 🧠 Matching CV ↔ offres
 
 ```
 CV (PDF/TXT) → extraction du texte → TF-IDF (CV + offres Gold) → similarité cosinus → Top N offres
 ```
-
-![Matching CV](docs/images/matching.png)
 
 ## 🚀 API FastAPI
 
@@ -77,11 +77,6 @@ CV (PDF/TXT) → extraction du texte → TF-IDF (CV + offres Gold) → similarit
 | `POST /match-cv` | Upload d'un CV → offres les plus pertinentes |
 
 Documentation Swagger : `http://localhost:8083/docs`
-
-## 📈 Dashboards Power BI
-
-![Dashboard marché](docs/images/dashboard-market.png)
-![Dashboard matching](docs/images/dashboard-matching.png)
 
 ## 🛠️ Stack technique
 
@@ -124,7 +119,7 @@ HireFlow/
 ├── scrapers/       # Scrapers + pipeline ETL
 ├── sql/            # Schéma MySQL (Bronze/Silver/Gold/logs)
 ├── frontend/       # Interface web
-├── docs/images/    # Captures du README
+├── docs/           # Captures, GIF et vidéo de démo
 └── docker-compose.yml
 ```
 
