@@ -14,7 +14,7 @@
 
 ![Démo HireFlow](docs/images/demo.gif)
 
-▶️ [Voir la vidéo de démo complète (MP4, 1 min 10)](docs/demo/hireflow-demo.mp4)
+▶️ [Voir la vidéo de démo complète (MP4, 1 min 10)](docs/demo/hireflow-demo.mp4) · 📑 [Présentation du projet (PDF)](docs/presentation/HireFlow-presentation.pdf)
 
 ---
 
@@ -59,9 +59,13 @@ DAG `job_scraping_pipeline` exécuté chaque jour (`0 7 * * *`), avec 1 relance 
 extract_and_load_bronze  >>  transform_to_silver  >>  transform_to_gold
 ```
 
+![DAG Airflow](docs/images/airflow-dag.png)
+
 ### Modèle de données (analytique)
 
-Schéma en étoile : `fact_jobs` + dimensions date, location, title, company, source et contract.
+Schéma en étoile construit dans Power BI à partir de `jobs_gold` : `fact_jobs` + dimensions date, location, title, company, source et contract.
+
+![Modèle de données](docs/images/data-model.png)
 
 ## 🧠 Matching CV ↔ offres
 
@@ -131,7 +135,7 @@ HireFlow/
 ├── scrapers/       # Scrapers + pipeline ETL
 ├── sql/            # Schéma MySQL (Bronze/Silver/Gold/logs)
 ├── frontend/       # Interface web
-├── docs/           # Captures, GIF et vidéo de démo
+├── docs/           # Captures, démo vidéo et présentation
 └── docker-compose.yml
 ```
 
