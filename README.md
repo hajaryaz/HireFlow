@@ -46,8 +46,8 @@ HireFlow collecte chaque jour des offres d'emploi Tech depuis **France Travail**
 | Couche | Rôle |
 |---|---|
 | **Bronze** | Données brutes, telles que collectées |
-| **Silver** | Dédoublonnage sur `job_url`, normalisation des intitulés, parsing des dates, nettoyage des localisations |
-| **Gold** | Titres catégorisés et texte de description prêt pour le NLP et la BI |
+| **Silver** | Suppression des offres sans URL, dédoublonnage sur `job_url`, normalisation des intitulés (`TITLE_MAP`), parsing des dates |
+| **Gold** | `description_text` prêt pour le NLP (repli sur intitulé + lieu + contrat si la description est vide), données prêtes pour la BI |
 
 Chaque tâche écrit dans une table `pipeline_logs` : statut, volumes par couche, durée et erreurs.
 
