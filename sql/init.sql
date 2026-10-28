@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS jobs_bronze (
     salary           VARCHAR(255),
     contract_type    VARCHAR(100),
     source           VARCHAR(50),
+    description      TEXT,
     ingested_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -28,6 +29,7 @@ CREATE TABLE IF NOT EXISTS jobs_silver (
     salary           VARCHAR(255),
     contract_type    VARCHAR(100),
     source           VARCHAR(50),
+    description      TEXT,
     processed_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
